@@ -44,3 +44,59 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+----------------------------
+import getEndpoints from '../server/db';
+
+const endpoints = getEndpoints();
+
+type ENDPOINTS = keyof typeof endpoints;
+type RESPONSE_DATA = {
+  greeting: string;
+};
+
+const getJson = async <T>(endpoint: ENDPOINTS): Promise<T> => {
+  const path = 'http://localhost:3001/api/${endpoint}';
+  const response = await fetch(path);
+
+  return await response.json();
+};
+
+type API = {
+  get: {
+    data: () => Promise<RESPONSE_DATA>;
+  };
+};
+const api: API = {
+  get: {
+    data: () => getJson<RESPONSE_DATA>('data'),
+  }, 
+};
+
+export type { RESPONSE_DATA, ENDPOINTS };
+export default api;
+
+------------------
+import React, { useEffect, useState } from 'react';
+
+import api from './api';
+import type { RESPONSE_DATA } from './api';
+
+import './App.css';
+
+function App() {
+  const [data, setData] = useState<RESPONSE_DATA>();
+
+  useEffect (() => {
+    const fetchData = async () => {
+      const response = await api.get.data();
+      setData(response);
+    };
+
+    fetchData();
+  }, []);
+
+  return <div className='App'>{data ? <p>{data.greeting}</p> : 'no data'}</div>;
+}
+ 
+export default App;
