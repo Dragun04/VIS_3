@@ -75,6 +75,7 @@ const api: API = {
 
 export type { RESPONSE_DATA, ENDPOINTS };
 export default api;
+
 ------------------
 import React, { useEffect, useState } from 'react';
 
