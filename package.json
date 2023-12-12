@@ -1,7 +1,7 @@
 {
   "name": "gh-pages-demo",
   "version": "0.1.0",
-  "homepage": "https://Dragun04.github.io/VIS_3",
+  "homepage": "https://dragun04.github.io/VIS_3",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
